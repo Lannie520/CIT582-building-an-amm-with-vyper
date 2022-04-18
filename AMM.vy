@@ -37,20 +37,20 @@ def tradeTokens(sell_token: address, sell_quantity: uint256):
 	#Your code here
     if sell_token == self.tokenA.address:
 		self.tokenA.transferFrom(msg.sender, self, sell_quantity)
-		total_t: uint256 = self.tokenAQty + sell_quantity
-		total_e: uint256 = self.invariant / total_t
-		delivery_eth: uint256 = self.tokenBQty - total_e
-		self.tokenB.transfer(msg.sender, delivery_eth)
-		self.tokenBQty = total_e
-		self.tokenAQty = total_t
-	else: 
+		new_total_tokens: uint256 = self.tokenAQty + sell_quantity
+		new_total_eth: uint256 = self.invariant / new_total_tokens
+		eth_to_send: uint256 = self.tokenBQty - new_total_eth
+		self.tokenB.transfer(msg.sender, eth_to_send)
+		self.tokenBQty = new_total_eth
+		self.tokenAQty = new_total_tokens
+	else:
 		self.tokenB.transferFrom(msg.sender, self, sell_quantity)
-		total_t: uint256 = self.tokenBQty + sell_quantity
-		total_e: uint256 = self.invariant / total_t
-		delivery_eth: uint256 = self.tokenAQty - total_e
-		self.tokenA.transfer(msg.sender, delivery_eth)
-		self.tokenAQty = total_e
-		self.tokenBQty = total_t
+		new_total_tokens: uint256 = self.tokenBQty + sell_quantity
+		new_total_eth: uint256 = self.invariant / new_total_tokens
+		eth_to_send: uint256 = self.tokenAQty - new_total_eth
+		self.tokenA.transfer(msg.sender, eth_to_send)
+		self.tokenAQty = new_total_eth
+		self.tokenBQty = new_total_tokens
 
 
 # Owner can withdraw their funds and destroy the market maker
