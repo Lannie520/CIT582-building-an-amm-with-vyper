@@ -52,6 +52,7 @@ def tradeTokens(sell_token: address, sell_quantity: uint256):
 		self.tokenAQty = total_e
 		self.tokenBQty = total_t
 
+
 # Owner can withdraw their funds and destroy the market maker
 @external
 def ownerWithdraw():
